@@ -1,0 +1,11 @@
+<template>
+    <div>
+    <img src={pass_val.image__c} alt="profilepic" style="float:left;width:85px;height:100px;border-radius:15px;padding:10px" class="image"/>  
+    <p style="margin-top:4px;padding-top:8px">
+    <a onclick={redirectToContactPage} data-id={pass_val.Id}>{pass_val.Name}</a><br/> 
+</p>
+    {pass_val.Price__c}<br/>
+    {pass_val.Quantity__c}<br/>
+    {pass_val.Brand__c}<br/>
+</div>
+</template>

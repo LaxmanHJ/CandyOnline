@@ -1,0 +1,14 @@
+<template>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col" style="width:100px">
+                <img src={pass_val.image__c} alt="profilepic" style="float:left;width:85px;height:100px;border-radius:15px;padding:10px" class="image"/>  
+            </div>
+             <div class="slds-col" style="margin:19px;width:20px">
+                <a onclick={redirectToContactPage} data-id={pass_val.Id}>{pass_val.Name}</a><br/> 
+            </div>
+            <div class="slds-col" style="margin:19px;">
+                 <p>{pass_val.Price__c}</p>
+            </div>
+        </div>
+        
+</template>

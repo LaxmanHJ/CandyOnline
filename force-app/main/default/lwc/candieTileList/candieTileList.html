@@ -1,0 +1,108 @@
+<template>
+
+    <div class="slds-clearfix" style="padding-bottom:5px;">
+        <div class="slds-float_right slds-grid slds-gutters" >
+            <div class="slds-col" >
+                <div class="slds-select_container">
+                    <select class="slds-select" name = "optionSelect" onchange={changeHandler} >
+                        <option value="AZ">Sort A-Z</option>
+                        <option value="ZA">Sort Z-A</option>
+                    </select> 
+                </div>
+            </div>
+            <div class="slds-col" >
+                    <lightning-icon  icon-name="utility:tile_card_list" alternative-text="grid"
+                    title="grid" size="small" onclick={displaygrid} data-id="gridView"></lightning-icon>
+            </div>
+            <div class="slds-col">
+                    <lightning-icon icon-name="utility:list" alternative-text="list"
+                    title="list" size="small" onclick={displayList} data-id="listView"></lightning-icon>
+            </div>
+        </div>
+    </div>
+
+
+
+    <lightning-card>
+        <!--lightning-layout horizontal-align="space" multiple-rows="true"-->
+        <template if:true={isgridView}>
+        <div class="slds-grid slds-wrap">
+        <template if:true={visibleContacts}>
+        <template for:each={visibleContacts} for:item="c">
+            <div key={c.Id} class="slds-col slds-size_1-of-3" style="padding:10px;margin:0">   
+            <!--p key={c.Id}-->
+              <!--lightning-layout-item flexibility="auto" padding="around-small" size="5"-->
+              <c-candie-tile pass_val={c}></c-candie-tile>            
+               <!--img src={c.ImageUrl__c} alt="profilepic" style="float:left;width:70px;height:90px;border-radius:15px;padding:10px" class="image"/-->    
+                 <!--a onclick={redirectToContactPage} data-id={c.Id}>{c.Name}</a-->        
+            <!--/lightning-layout-item-->                   
+            <!--/p-->
+        </div> 
+        </template>
+    </template>
+        </div>
+        </template>
+
+
+        <template if:false={isgridView}>
+            <template if:true={visibleContacts}>
+                <template for:each={visibleContacts} for:item="c">
+                    <div key={c.Id} style="width:100%;margin:0px">   
+                     
+                      <c-candie-tile-list-view pass_val={c} flagtile={testp}></c-candie-tile-list-view>            
+                      
+                </div> 
+                </template>
+            </template>
+
+        </template>
+<p slot="footer">
+   
+    <template if:true={unicatbrandmaker.data}>
+        <c-paginsfdc records={unicatbrandmaker.data} onpassevent={updateContactHandler}></c-paginsfdc>
+    </template>  
+    <template if:false={unicatbrandmaker.data}>
+        <template if:true={unicatbrand.data}>
+            <c-paginsfdc records={unicatbrand.data} onpassevent={updateContactHandler}></c-paginsfdc>
+        </template> 
+        <template if:true={unicatmaker.data}>
+            <c-paginsfdc records={unicatmaker.data} onpassevent={updateContactHandler}></c-paginsfdc>
+        </template> 
+        <template if:true={unibrandmaker.data}>
+            <c-paginsfdc records={unibrandmaker.data} onpassevent={updateContactHandler}></c-paginsfdc>
+        </template> 
+        <template if:false={unicatbrand.data}>
+            <template if:false={unicatmaker.data}>
+                <template if:false={unibrandmaker.data}>
+                    <template if:true={uniCatProd.data}>
+                        <c-paginsfdc records={uniCatProd.data} onpassevent={updateContactHandler}></c-paginsfdc>
+                    </template> 
+                    <template if:true={unibrand.data}>
+                        <c-paginsfdc records={unibrand.data} onpassevent={updateContactHandler}></c-paginsfdc>
+                    </template> 
+                    <template if:true={unimaker.data}>
+                        <c-paginsfdc records={unimaker.data} onpassevent={updateContactHandler}></c-paginsfdc>
+                    </template>
+                     
+                    <template if:false={uniCatProd.data}>
+                        <template if:false={unibrand.data}>
+                            <template if:false={unimaker.data}>
+                                <template if:true={cons.data}>
+                                    <c-paginsfdc records={cons.data} onpassevent={updateContactHandler}></c-paginsfdc>
+                                </template>  
+                            </template> 
+                        </template> 
+                    </template>
+
+                </template> 
+            </template> 
+        </template> 
+    </template>  
+    
+
+    
+
+  </p>
+    <!--/lightning-layout-->
+    </lightning-card> 
+</template>
