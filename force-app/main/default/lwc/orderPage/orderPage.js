@@ -9,9 +9,9 @@ export default class OrderPage extends LightningElement {
   reward;
   amount;
   paymentMode;
-  @api PMessages ='';
-  @api PMessages1='';
-  @api PMessages2='';
+  @api PMessagesName ='';
+  @api PMessagesImage='';
+  @api PMessagesPrice='';
   @track error;
   @track flag
   @track  rec = {

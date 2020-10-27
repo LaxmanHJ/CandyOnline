@@ -1,11 +1,11 @@
 import { LightningElement,track,api} from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class CandiesPopup extends LightningElement {
+export default class CandiesPopup extends NavigationMixin(LightningElement) {
     @track isModalOpen = false;
-    @api ParentMessage = '';
-    @api ParentMessage1='';
-    @api ParentMessage2='';
+    @api ParentMessageName = '';
+    @api ParentMessageImage='';
+    @api ParentMessagePrice='';
     @api count=1;
     
 
@@ -48,32 +48,34 @@ export default class CandiesPopup extends LightningElement {
     //increment and decrement event
      handleincrement(){
          this.count=this.count+1;
+         this.ParentMessagePrice = this.ParentMessagePrice * this.count;
      }
 
      handledecrement(){
          if(this.count>1){
              this.count=this.count-1;
+             this.ParentMessagePrice = this.ParentMessagePrice * this.count;
          }
      }
 
 
-    navigateToRecordPage() {
+    navigateToRecordPage(event) {
       console.log("Checkout done!!!")
-      let compDefinition2 = {
-          componentDef2:"c:orderPage",
+      let compDefinition = {
+          componentDef:"c:orderPage",
           attributes: {
-              PMessages : this.ParentMessage,
-              PMessages1: this.ParentMessage1,
-              PMessages2: this.ParentMessage2,   
+              PMessagesName : this.ParentMessageName,
+              PMessagesImage: this.ParentMessageImage,
+              PMessagesPrice: this.ParentMessagePrice,   
           }
       };
       // Base64 encode the compDefinition JS object
-      let encodedCompDef = btoa(JSON.stringify(compDefinition2));
+      let encodedCompDef = btoa(JSON.stringify(compDefinition));
     //  console.log('eventId:'+event.target.dataset.recordId);
       this[NavigationMixin.Navigate]({
       type: "standard__webPage",
       attributes: {
-        url: "/ones/ones.app#" + encodedCompDef           
+        url: "/one/one.app#" + encodedCompDef           
       },
   });
 }

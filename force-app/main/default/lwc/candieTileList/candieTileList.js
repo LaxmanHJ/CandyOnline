@@ -7,7 +7,8 @@ import cb_select from '@salesforce/apex/CatProd.getComb_cat_brandSelected';
 import cm_select from '@salesforce/apex/CatProd.getComb_cat_makerSelected'; 
 import bm_select from '@salesforce/apex/CatProd.getComb_brand_makerSelected'; 
 import cmb_select from '@salesforce/apex/CatProd.getComb_cat_maker_brandSelected';
-    
+import { NavigationMixin } from 'lightning/navigation';
+
 
 import getProdsasce from '@salesforce/apex/CatProd.getProductsinAsce';
 import getProdsdesc from '@salesforce/apex/CatProd.getProductsinDesc';
@@ -16,7 +17,7 @@ import getProdsdesc from '@salesforce/apex/CatProd.getProductsinDesc';
 import { subscribe, MessageContext } from 'lightning/messageService';
 import SAMPLEMC from '@salesforce/messageChannel/sfdcdemo__c';
 
-export default class CandieTileList extends LightningElement {
+export default class CandieTileList extends NavigationMixin(LightningElement) {
 
    testp = true;
 
