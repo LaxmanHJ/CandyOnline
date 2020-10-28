@@ -1,7 +1,7 @@
 import { LightningElement,api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class CandieTileListView extends LightningElement {
+export default class CandieTileListView extends NavigationMixin(LightningElement) {
     @api pass_val;
     redirectToContactPage(event) {
         // Navigate to the Account home page
@@ -19,9 +19,11 @@ export default class CandieTileListView extends LightningElement {
         let compDefinition = {
             componentDef: "c:candiesPopup",
             attributes: {
-                ParentMessage : this.pass_val.Name,
-                ParentMessage1: this.pass_val.image__c,
-                ParentMessage2: this.pass_val.Price__c,   
+                ParentMessageName : this.pass_val.Name,
+                ParentMessageImage: this.pass_val.image__c,
+                ParentMessagePrice: this.pass_val.Price__c, 
+                ParentMessageQuantity: this.pass_val.Quantity__c 
+  
             }
         };
         // Base64 encode the compDefinition JS object
