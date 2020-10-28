@@ -1,11 +1,29 @@
 <template>
-    <div>
-    <img src={pass_val.image__c} alt="profilepic" style="float:left;width:85px;height:100px;border-radius:15px;padding:10px" class="image"/>  
-    <p style="margin-top:4px;padding-top:8px">
-    <a onclick={navigateToTabPage} data-id={pass_val.Id}>{pass_val.Name}</a><br/> 
+    <template if:false={flagtile}>
+   <div class="csscard">  
+    <div style="padding-top:4px;text-align:center">
+    <!--p style="margin-top:4px;padding-top:8px"-->
+    <img src={pass_val.Image__c} alt="profilepic" style="width:70%;height:150px;padding:10px" class="image"/>  
+     <p style="padding-top:4px;text-align:center">
+      
+    <!--a onclick={redirectToContactPage} data-id={pass_val.Id}><b style="color:red">{pass_val.Name}</b></a--> 
+    <a onclick={navigateToTabPage} data-id={pass_val.Id}><b style="color:red">{pass_val.Name}</b></a><br/> 
+    <b style="color:black">${pass_val.Price__c}</b>
+  
 </p>
-    {pass_val.Price__c}<br/>
-    {pass_val.Quantity__c}<br/>
-    {pass_val.Brand__c}<br/>
 </div>
+</div> 
+</template>
+   <template if:true={flagtile}> 
+    <div class="csslist"> 
+    <div style="margin-left:0px;padding-left:0px">
+        <img src={pass_val.image__c} alt="profilepic" style="float:left;width:120px;height:150px;padding:10px;margin-left:0px"/>  
+        <!--p style="margin-top:4px;padding-top:8px"-->
+        <!--a onclick={redirectToContactPage} data-id={pass_val.Id} style="margin-left:0px;color:red">{pass_val.Name}</a-->
+        <a onclick={navigateToTabPage} data-id={pass_val.Id}><b style="color:red">{pass_val.Name}</b></a><br/> 
+        <p><b style="color:black">${pass_val.Price__c}</b></p>
+       
+    </div>   
+    </div>
+   </template>
 </template>

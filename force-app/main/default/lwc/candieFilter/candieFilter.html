@@ -1,14 +1,14 @@
 <template>
     <lightning-card>
         <lightning-button label="reset" variant="brand" onclick={resethandler} class="slds-float_right slds-p-right_xx-small"></lightning-button><br/>
-        <lightning-input type="search" class="slds-p-left_xx-small slds-p-right_xx-small" onchange={handleTextChange} value={searchKey} label="Search Contact"></lightning-input>
+        <lightning-input type="search" class="slds-p-left_xx-small slds-p-right_xx-small" onchange={handleTextChange} value={searchKey} label="Search store"></lightning-input>
   
               <!--Load categories from apex in Select List -->
-     <lightning-card title="Categories" icon-name="custom:custom67">
+     <lightning-card title="Categories">
         <template if:true={categoriesOptionList}>
             <div class="slds-m-around_medium">
                     <select onchange={handleCategoryChange}>
-                        <option value="">--Select--</option>
+                        <option value="undefined">Select</option>
                         <template for:each={categoriesOptionList} for:item="item">
                             <option value={item.value} key={item.value}>{item.label}</option>
                         </template>
@@ -20,11 +20,11 @@
 
 
          <!--Load brands from apex in Select List -->
-         <lightning-card title="Brands" icon-name="custom:custom67">
+         <lightning-card title="Brands">
             <template if:true={brandOptionList}>
                 <div class="slds-m-around_medium">
                         <select onchange={handleBrandChange} >
-                            <option value={}>--Select--</option>
+                            <option value="undefined">Select</option>
                             <template for:each={brandOptionList} for:item="item">
                                 <option value={item.value} key={item.value}>{item.label}</option>
                             </template>
@@ -37,11 +37,11 @@
 
 
              <!--Load makers from apex in Select List -->
-     <lightning-card title="Maker" icon-name="custom:custom67">
+     <lightning-card title="Maker">
         <template if:true={makersOptionList}>
             <div class="slds-m-around_medium">
                     <select onchange={handleMakerChange}>
-                        <option value="">--Select--</option>
+                        <option value="undefined">Select</option>
                         <template for:each={makersOptionList} for:item="item">
                             <option value={item.value} key={item.value}>{item.label}</option>
                         </template>

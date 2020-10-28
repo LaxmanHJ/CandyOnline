@@ -1,87 +1,83 @@
 <template>
-   
-   <!--overlay modal/popup display-->
-   <lightning-card>
-       <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-       aria-describedby="modal-content-id-1" class={modalClass}>
-       <div class="slds-modal__container">
-          <header class="slds-modal__header">
-             <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
-                onclick={closeModal}>
-                <lightning-icon icon-name="utility:close" alternative-text="Close Modal" variant="inverse" size="small">
-                </lightning-icon>
-             </button>
-             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-modal__title slds-hyphenate">
-                Proceed to checkout
-             </h2>
-          </header>
-       <lightning-card>
-
-       
-          <div class = "content1">
-                 <div class="slds-float_left" style="margin:10px">
-                    <img src={ParentMessageImage}/>
-                    <p>{ParentMessageName}</p>
-                    <p>{ParentMessagePrice}</p>
-                 </div>
-                 Quantity <lightning-button-icon  style="margin:5px;" icon-name="utility:add"  alternative-text="add" title="add" 
-                 onclick={handleincrement}></lightning-button-icon>
-                 {count}
-                 <lightning-button-icon style="margin:5px;" icon-name="utility:dash"  alternative-text="sub" title="sub"
-                 onclick={handledecrement}></lightning-button-icon>
-                    Total Price : {calsum}
-           </div>
-       
-   
-          
-           <lightning-input type="text"  placeholder="Add a note to your order"
-            icon-name="utility:search"></lightning-input>
-           
-       
-       <div class="content">
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-             <!-- enter here -->
-             <p>Shipping and discounts will be calculated at checkout.</p>
-              
-                   <lightning-input type="checkbox" label="I agree with the terms and conditions" onchange={handleChange}></lightning-input>
-                   <template if:true={areDetailsVisible}>
-                       <div class=content>
-                           <lightning-button variant="destructive" id="submit_button" label="Check Out" title="Destructive action" onclick={navigateToRecordPage} ></lightning-button>
-                       </div>
-                   </template>
-               </div>
-           </div>
-           </lightning-card>
-       </div>
-    </section>
-    <div class={modalBackdropClass}></div>
-   </lightning-card>
-    
-   
-    
-    
-   
-   <!--add to cart page-->
+    <!--overlay modal/popup display-->
     <lightning-card>
-        <div style="margin:10px">
-           <img src={ParentMessageImage}/>
-           <p>{ParentMessageName}</p>
-           <p>{ParentMessagePrice}</p>
-           <p>Total Price : {calsum}</p>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class={modalClass}>
+        <div class="slds-modal__container">
+           <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                 onclick={closeModal}>
+                 <lightning-icon icon-name="utility:close" alternative-text="Close Modal" variant="inverse" size="small">
+                 </lightning-icon>
+              </button>
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-modal__title slds-hyphenate">
+                 Proceed to checkout
+              </h2>
+           </header>
+        <lightning-card>
+
+        
+           <div class = "content1">
+                  <div class="slds-float_left" style="margin:10px">
+                     <img src={ParentMessageImage}/>
+                     <p>{ParentMessageName}</p>
+                     <p>{ParentMessagePrice}</p>
+                  </div>
+                  Quantity <lightning-button-icon  style="margin:5px;" icon-name="utility:add"  alternative-text="add" title="add" 
+                  onclick={handleincrement}></lightning-button-icon>
+                  {count}
+                  <lightning-button-icon style="margin:5px;" icon-name="utility:dash"  alternative-text="sub" title="sub"
+                  onclick={handledecrement}></lightning-button-icon>
+                     Total Price : {calsum}
+            </div>
+        
+    
+           
+            <lightning-input type="text"  placeholder="Add a note to your order"
+             icon-name="utility:search"></lightning-input>
+            
+        
+        <div class="content">
+           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <!-- enter here -->
+              <p>Shipping and discounts will be calculated at checkout.</p>
+               
+                    <lightning-input type="checkbox" label="I agree with the terms and conditions" onchange={handleChange}></lightning-input>
+                    <template if:true={areDetailsVisible}>
+                        <div class=content>
+                            <lightning-button variant="destructive" id="submit_button" label="Check Out" title="Destructive action" onclick={saveOrder}></lightning-button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            </lightning-card>
         </div>
-       <div class = "content1">
-       Quantity <lightning-button-icon  style="margin:5px;" icon-name="utility:add" disabled={flagcart} alternative-text="add" title="add" 
-       onclick={handleincrement}></lightning-button-icon>
-       {count}
-       <lightning-button-icon style="margin:5px;" icon-name="utility:dash" disabled={flagcart} alternative-text="sub" title="sub"
-       onclick={handledecrement}></lightning-button-icon>
-       </div>
-       
-   
-       <div class = "content2">
-        <lightning-button variant="destructive" style="margin:5px;" label="Add to Cart" disabled={flagcart} title="Destructive action" onclick={showModal}></lightning-button>
-        <button class="slds-button slds-button_brand" style="margin:5px;" disabled={flagsold}>Sold out</button>
-       </div>
-   </lightning-card>
-   
-   </template>
+     </section>
+     <div class={modalBackdropClass}></div>
+    </lightning-card>
+     
+    <!--add to cart page-->
+     <lightning-card>
+         <div style="margin:10px">
+            <img src={ParentMessageImage}/>
+            <p>{ParentMessageName}</p>
+            <p>{ParentMessagePrice}</p>
+            <p>Total Price : {calsum}</p>
+         </div>
+        <div class = "content1">
+        Quantity <lightning-button-icon  style="margin:5px;" icon-name="utility:add" disabled={flagcart} alternative-text="add" title="add" 
+        onclick={handleincrement}></lightning-button-icon>
+        {count}
+        <lightning-button-icon style="margin:5px;" icon-name="utility:dash" disabled={flagcart} alternative-text="sub" title="sub"
+        onclick={handledecrement}></lightning-button-icon>
+        </div>
+        
+    
+        <div class = "content2">
+         <lightning-button variant="destructive" style="margin:5px;" label="Add to Cart" disabled={flagcart} title="Destructive action" onclick={showModal}></lightning-button>
+         <button class="slds-button slds-button_brand" style="margin:5px;" disabled={flagsold}>Sold out</button>
+        </div>
+    </lightning-card>
+    
+    </template>
+    

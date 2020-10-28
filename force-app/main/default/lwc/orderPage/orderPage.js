@@ -2,16 +2,27 @@ import { LightningElement,track,api} from 'lwc';
 import FIRSTNAME_FIELD from '@salesforce/schema/Contact.FirstName';
 import LASTNAME_FIELD from '@salesforce/schema/Contact.LastName';
 import EMAIL_FIELD from '@salesforce/schema/Contact.Email';
+import createContact from '@salesforce/apex/OrderClass.createContact';
+import updateOrder from '@salesforce/apex/OrderClass.updateOrder';
+import getContact from '@salesforce/apex/OrderClass.getContact';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 export default class OrderPage extends LightningElement {
   flag1;
   city;
   reward;
   amount;
   paymentMode;
-  @api PMessagesName ='';
-  @api PMessagesImage='';
-  @api PMessagesPrice='';
+  conId;
+  newConId
+  @api Name ='';
+  @api Image='';
+  @api Price='';
+  @api Count='';
+  @api subtotal='';
+  @api total='';
+  @api prodId='';
+  @api OrderId='';
   @track error;
   @track flag
   @track  rec = {
@@ -53,49 +64,73 @@ export default class OrderPage extends LightningElement {
     handlePayment(event){
        this.paymentMode=event.target.value;
     }
-    handleAmount(event){
-      this.amount=event.target.value;
-    }
     handleAddress(event){
-    this.address=event.target.value;
+    this.Address=event.target.value;
     }
     handleCity(event){
     this.city=event.target.value;
     }
+    get handleDisable(){
+        return this.total<1000;
+    }
     submitOrder(){
         this.flag1=false;
-        console.log("Order Submitted")
-     /*   getContact().then(result=>{
+       getContact().then(result=>{
             this.contacts=result;
         })
         for(var i=0;i<this.contacts.length;i++){
             if(this.contacts[i].Email==this.rec.Email){
                 console.log(this.contacts[i].Email);
+                this.conId=this.contacts[i].Id;
+                console.log(this.conId);
                 this.flag1=true;
+                break;
             }
         }
         if(this.flag1){
-            this.flag=false;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                title: 'Warning',
-                message: 'This email has already been taken ',
-                variant: 'warning',
-            }),
-        );
+           this.flag1=false;
+           console.log(this.OrderId,this.conId);
+           updateOrder({orderId:this.OrderId,contactId:this.conId,address:this.Address,amount:this.total})
+           .then(result=>{
+               console.log(result);
+               this.dispatchEvent(
+               new ShowToastEvent({
+               title: 'Success',
+               message: 'Order Placed Successfully',
+               variant: 'success',
+           }),
+       ); 
+       })
+      .catch(error => {
+        this.error = error;
+        console.log(this.error);
+        const evt = new ShowToastEvent({
+            title: "Error",
+            message: "Error while Placing Order",
+            variant: "error",
+        });
+        this.dispatchEvent(evt);
+    });
         }
         else{
-        createContact({con: this.rec})
+        this.createNewContact();
+}
+}
+createNewContact(){
+    createContact({con: this.rec})
         .then(result=>{
             this.rec={};
+            this.contacts=result;
+            this.newConId=this.contacts.Id;
+            console.log(this.newConId);
+            this.updateOrderContact();
             this.dispatchEvent(
             new ShowToastEvent({
             title: 'Success',
-            message: 'Account created',
+            message: 'Contact Created Successfully',
             variant: 'success',
         }),
-    );
-       
+    );  
     })
     .catch(error => {
         this.error = error;
@@ -107,7 +142,29 @@ export default class OrderPage extends LightningElement {
         });
         this.dispatchEvent(evt);
     }); 
-}*/ 
-}
    
- }
+    }
+    updateOrderContact(){
+        updateOrder({orderId:this.OrderId,contactId:this.newConId,address:this.Address,amount:this.total})
+        .then(result=>{
+            console.log(result);
+            this.dispatchEvent(
+            new ShowToastEvent({
+            title: 'Success',
+            message: 'Order Placed Successfully',
+            variant: 'success',
+        }),
+    ); 
+    })
+.catch(error => {
+ this.error = error;
+ console.log(this.error);
+ const evt = new ShowToastEvent({
+     title: "Error",
+     message: "Error while Placing Order",
+     variant: "error",
+ });
+ this.dispatchEvent(evt);
+});
+    }
+}

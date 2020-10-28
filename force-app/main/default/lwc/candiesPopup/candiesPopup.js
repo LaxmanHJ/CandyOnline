@@ -1,13 +1,17 @@
-import { LightningElement,track,api} from 'lwc';
+import { LightningElement,track,api,wire} from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-
+import createOrder from '@salesforce/apex/CatProd.createOrder';
 export default class CandiesPopup extends NavigationMixin(LightningElement) {
     @track isModalOpen = false;
     @api ParentMessageName = '';
     @api ParentMessageImage='';
     @api ParentMessagePrice='';
     @api ParentMessageQuantity = '';
+    @api ParentMessageId='';
     @api count=1;
+    status;
+    @api orders;
+    @api orderId;
    // calsum=ParentMessagePrice;
     @track flagsold;
     @track flagcart;
@@ -62,30 +66,15 @@ export default class CandiesPopup extends NavigationMixin(LightningElement) {
            console.log('val'+this.calsum);
            console.log('val'+this.a);
            }
-        // this.ParentMessagePrice = this.ParentMessagePrice * this.count;
-       //    this.ParentMessagePrice = this.calsum;
      }
 
      handledecrement(){
-        /* if(this.count>1){
-             this.count=this.count-1;
-             this.ParentMessagePrice = this.ParentMessagePrice * this.count;
-         }
-         */
         if(this.count>1){
           this.count = this.count-1;
            this.a = this.ParentMessagePrice; 
            this.calsum = this.calsum - this.a;
         }
      }
-/*
-     handleSoldOut(){
-       if(this.ParentMessageQuantity<10){
-         console.log('Sold out');
-       }
-     }
-  */
-
      connectedCallback(){
       setTimeout(()=>{
          if(this.ParentMessageQuantity<12){
@@ -96,18 +85,36 @@ export default class CandiesPopup extends NavigationMixin(LightningElement) {
          console.log(this.calsum);
       },1500);
   }
-
+    saveOrder(){
+      this.status='In Cart';
+      console.log("button checkout clicked",this.ParentMessageId)
+       createOrder({status:this.status,amount:this.calsum,prodId:this.ParentMessageId,quant:this.count}).then(result=>{
+        console.log("result in popup",result,this.ParentMessageId);
+        this.orders=result;
+        this.orderId=this.orders.Id;
+        console.log(this.orderId);
+        this.navigateToRecordPage();
+       })
+       .catch(error => {
+        this.error = error;
+         console.log(this.error);
+        });
+    }
 
     navigateToRecordPage(event) {
       console.log("Checkout done!!!")
+      console.log(this.orderId);
       let compDefinition = {
           componentDef:"c:orderPage",
           attributes: {
-              PMessagesName : this.ParentMessageName,
-              PMessagesImage: this.ParentMessageImage,
-             // PMessagesPrice: this.ParentMessagePrice,   
-             PMessagesPrice: this.calsum,
-             PMessagesQuantity: this.count
+              Name : this.ParentMessageName,
+              Image: this.ParentMessageImage, 
+              Price: this.ParentMessagePrice,  
+              subtotal: this.calsum,
+              Count: this.count,
+              total:this.calsum+10,
+              prodId:this.ParentMessageId,
+              OrderId:this.orderId
           }
       };
       // Base64 encode the compDefinition JS object

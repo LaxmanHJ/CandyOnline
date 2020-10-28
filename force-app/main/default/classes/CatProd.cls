@@ -2,6 +2,17 @@ public with sharing class CatProd {
     public CatProd() {
            
     }
+    @AuraEnabled
+    public static OrderDetail__c createOrder(String status,Decimal amount,String prodId,Decimal quant){
+         OrderDetail__c od=new OrderDetail__c();
+         od.Status__c=status;
+         od.Amount__c=amount;
+         od.Product_Id__c=prodId;
+         od.Order_date__c=Date.today();
+         od.Quantity__c=quant;
+         insert od;
+         return od;
+    }
 
     @AuraEnabled(cacheable=true)
     public static List<ProductStore__c> getProducts(String searchText){

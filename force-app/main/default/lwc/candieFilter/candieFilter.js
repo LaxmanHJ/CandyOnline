@@ -76,10 +76,11 @@ export default class CandieFilter extends LightningElement {
     resethandler(){
         this.searchKey = '';
        const message = {
-        conlist: this.searchKey
+        conlist: this.searchKey,
     };
   
             publish(this.messageContext, SAMPLEMC, message);
+            
             console.log('resethandlerpublished'+this.searchKey);
     }
 

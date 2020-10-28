@@ -1,29 +1,31 @@
 <template>
-
-    <div class="slds-clearfix" style="padding-bottom:5px;">
-        <div class="slds-float_right slds-grid slds-gutters" >
-            <div class="slds-col" >
-                <div class="slds-select_container">
-                    <select class="slds-select" name = "optionSelect" onchange={changeHandler} >
-                        <option value="AZ">Sort A-Z</option>
-                        <option value="ZA">Sort Z-A</option>
-                    </select> 
+    <lightning-card>
+        <p style="color:red;font-size:15px;padding-left:10px">Home</p>
+        <div class="slds-clearfix" style="padding-bottom:5px;">
+            <div class="slds-float_right slds-grid slds-gutters" >
+               
+                <div class="slds-col" >
+                    <lightning-button label="Add Products" variant="brand" class="slds-float_left"></lightning-button>
+                </div>   
+                <div class="slds-col" >
+                    <div class="slds-select_container">
+                        <select class="slds-select" name = "optionSelect" onchange={changeHandler} >
+                            <option value="AZ"><b style="color:red">Sort A-Z</b></option>
+                            <option value="ZA"><b style="color:red">Sort Z-A</b></option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="slds-col" >
+                        <lightning-icon  icon-name="utility:tile_card_list" alternative-text="grid"
+                        title="grid" size="small" onmouseover={displaygrid} data-id="gridView"></lightning-icon>
+                </div>
+                <div class="slds-col">
+                        <lightning-icon icon-name="utility:list" alternative-text="list"
+                        title="list" size="small" onmouseover={displayList} data-id="listView"></lightning-icon>
                 </div>
             </div>
-            <div class="slds-col" >
-                    <lightning-icon  icon-name="utility:tile_card_list" alternative-text="grid"
-                    title="grid" size="small" onclick={displaygrid} data-id="gridView"></lightning-icon>
-            </div>
-            <div class="slds-col">
-                    <lightning-icon icon-name="utility:list" alternative-text="list"
-                    title="list" size="small" onclick={displayList} data-id="listView"></lightning-icon>
-            </div>
         </div>
-    </div>
 
-
-
-    <lightning-card>
         <!--lightning-layout horizontal-align="space" multiple-rows="true"-->
         <template if:true={isgridView}>
         <div class="slds-grid slds-wrap">
